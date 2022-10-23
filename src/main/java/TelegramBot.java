@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.File;
+import java.util.Objects;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private static final Logger log = LoggerFactory.getLogger(TelegramBot.class);
@@ -26,7 +27,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Long chatId = update.getMessage().getChatId();
-            SendAnimation sendAnimation = new SendAnimation(chatId.toString(), new InputFile(new File("src/main/resources/mp4/hi.mp4")));
+            SendAnimation sendAnimation = new SendAnimation(chatId.toString(), new InputFile(new File(Objects.requireNonNull(this.getClass().getResource("/mp4/hi.mp4")).getFile())));
             try {
                 Integer lastId = execute(sendAnimation).getMessageId();
                 Thread.sleep(4000);
