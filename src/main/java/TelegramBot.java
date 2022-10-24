@@ -40,9 +40,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             try {
 
-                String info = getUrlContent();
-                JSONObject obj = new JSONObject(info);
-                JSONArray print = obj.getJSONArray("data");
+                JSONArray print = new JSONObject(getUrlContent()).getJSONArray("data");
                 float cod = 0;
                 for (int i = 0; i < print.length(); i++) {
                     JSONObject j = print.getJSONObject(i);
