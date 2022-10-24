@@ -10,13 +10,13 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.*;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Objects;
 
 public class TelegramBot extends TelegramLongPollingBot {
@@ -71,10 +71,9 @@ public class TelegramBot extends TelegramLongPollingBot {
                 Integer lastId = execute(sendAnimation).getMessageId();
                 Thread.sleep(5000);
                 execute(new DeleteMessage(update.getMessage().getChatId().toString(), lastId));
-            } catch (TelegramApiException e) {
+            } catch (TelegramApiException|InterruptedException e) {
                 Thread.currentThread().interrupt();
                 log.error("Exception when sending message: ", e);
-            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
